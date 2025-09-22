@@ -4,6 +4,7 @@
  */
 package tools;
 
+import java.util.Date;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -39,4 +40,24 @@ public class Mcl_Util {
     public static String mcl_perguntar(String mensagem) {
         return JOptionPane.showInputDialog(null, mensagem);
     }
+    public static int strToInt(String str){
+        return Integer.valueOf(str);
+    }
+    
+    public static double strToDouble(String str) {
+        return Double.valueOf(str);
+    }
+    public static Date strToDate(String str) {
+        return new Date(str);
+    }
+    public static String intToStr(int num) {
+        return String.valueOf(num);
+    }
+    public static String doubleToStr(double num) {
+        return "";
+    }
+    public static String dateToStr(Date num) {
+        return "";
+    }
+    
 }

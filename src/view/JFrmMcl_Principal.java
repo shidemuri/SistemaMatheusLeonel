@@ -139,8 +139,8 @@ public class JFrmMcl_Principal extends javax.swing.JFrame {
 
     private void jMnuUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuUsuariosActionPerformed
         // TODO add your handling code here:
-        /*JDlgMcl_Usuarios jDlgUsuarios = new JDlgMcl_Usuarios(this, true);
-        jDlgUsuarios.setVisible(true);*/
+        JDlgMcl_Usuarios jDlgUsuarios = new JDlgMcl_Usuarios(this, true);
+        jDlgUsuarios.setVisible(true);
     }//GEN-LAST:event_jMnuUsuariosActionPerformed
 
     private void jMnuProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuProdutosActionPerformed
@@ -149,8 +149,8 @@ public class JFrmMcl_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnuProdutosActionPerformed
 
     private void jMnuVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuVendedorActionPerformed
-        /*JDlgMcl_Vendedor jDlgVendedor = new JDlgMcl_Vendedor(this, true);
-        jDlgVendedor.setVisible(true);*/
+        JDlgMcl_Vendedor jDlgVendedor = new JDlgMcl_Vendedor(this, true);
+        jDlgVendedor.setVisible(true);
     }//GEN-LAST:event_jMnuVendedorActionPerformed
 
     private void jMnuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuSairActionPerformed
@@ -158,8 +158,8 @@ public class JFrmMcl_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMnuSairActionPerformed
 
     private void jMnuClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuClientesActionPerformed
-        /*JDlgMcl_Clientes jDlgClientes = new JDlgMcl_Clientes(this, true);
-        jDlgClientes.setVisible(true);*/
+        JDlgMcl_Clientes jDlgClientes = new JDlgMcl_Clientes(this, true);
+        jDlgClientes.setVisible(true);
     }//GEN-LAST:event_jMnuClientesActionPerformed
 
     private void jMnuMat_VendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMnuMat_VendasActionPerformed
