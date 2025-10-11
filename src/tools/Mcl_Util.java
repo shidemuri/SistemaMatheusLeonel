@@ -23,14 +23,14 @@ public class Mcl_Util {
     }
     public static void mcl_limpar(JComponent ... componentes) {
         for (JComponent componente : componentes) {
-            if(componente instanceof JTextField jTextField) {
-                jTextField.setText("");
+            if(componente instanceof JTextField) {
+                ((JTextField) componente).setText("");
             }
-            if(componente instanceof JComboBox jComboBox) {
-                jComboBox.setSelectedIndex(0);
+            if(componente instanceof JComboBox) {
+                ((JComboBox) componente).setSelectedIndex(0);
             }
-            if(componente instanceof JCheckBox jCheckBox) {
-                jCheckBox.setSelected(false);
+            if(componente instanceof JCheckBox) {
+                ((JCheckBox) componente).setSelected(false);
             }
         }
     }
