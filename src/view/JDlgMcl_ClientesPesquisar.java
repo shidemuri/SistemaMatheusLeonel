@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package view;
-
+import bean.MclClientes;
+import dao.DaoGeneric;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -14,7 +15,8 @@ import javax.swing.JOptionPane;
 public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
 
     JDlgMcl_Clientes jDlgMcl_Clientes;
-    //Mcl_ControllerClientes mcl_ControllerClientes;
+    Mcl_ControllerClientes mcl_ControllerClientes;
+    DaoGeneric clientesdao = new DaoGeneric();
     /**
      * Creates new form JDlgUsuariosPesquisar
      */ 
@@ -23,11 +25,10 @@ public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Resultados da pesquisa");
-        /*Mcl_ClientesDao clientesdao = new Mcl_ClientesDao();
-        List lista = (List) clientesdao.listAll();
+        List lista = (List) clientesdao.listAll(new MclClientes());
         mcl_ControllerClientes = new Mcl_ControllerClientes();
         mcl_ControllerClientes.setlist(lista);
-        jTable1.setModel(mcl_ControllerClientes);*/
+        jTable1.setModel(mcl_ControllerClientes);
                 
     }
     
@@ -83,10 +84,13 @@ public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnOk)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(330, 330, 330)
+                .addComponent(jBtnOk)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -101,13 +105,13 @@ public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        /*int linSel = jTable1.getSelectedRow();
+        int linSel = jTable1.getSelectedRow();
         if(linSel == -1) {
             JOptionPane.showMessageDialog(null, "Escolha uma linha primeiro.");
             return;
         }
-        Mcl_Clientes clientes = (Mcl_Clientes) mcl_ControllerClientes.getBean(linSel);*/
-        jDlgMcl_Clientes.beanView();
+        MclClientes clientes = (MclClientes) mcl_ControllerClientes.getBean(linSel);
+        jDlgMcl_Clientes.beanView(clientes);
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 
@@ -139,7 +143,7 @@ public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
+        //</editor-fold> 
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

@@ -4,7 +4,8 @@
  */
 package view;
 import tools.Mcl_Util;
-
+import dao.DaoGeneric;
+import bean.MclClientes;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,6 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class JDlgMcl_Clientes extends javax.swing.JDialog {
 
+    DaoGeneric clientesdao = new DaoGeneric();
+    
     private String acao = "incluir";
     
     
@@ -91,31 +94,48 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         jBtnAlterar);
     }
     
-    public void beanView(/*Mcl_Clientes clientes*/) {
+    public MclClientes viewBean(){
+        MclClientes cliente = new MclClientes();
+        cliente.setMclApelido(jTxtApelido.getText());
+        cliente.setMclAtivo(jCboAtivo.isSelected() ? 1 : 0);
+        cliente.setMclBairro(jTxtBairro.getText());
+        cliente.setMclCelular(jFmtCelular.getText());
+        cliente.setMclCep(jFmtCep.getText());
+        cliente.setMclCidade(jFmtCep.getText());
+        cliente.setMclIdClientes(Integer.parseInt(jTxtCodigo.getText()));
+        cliente.setMclCpf(jFmtCpf.getText());
+        cliente.setMclEmail(jTxtEmail.getText());
+        cliente.setMclEndereco(jTxtEndereco.getText());
+        cliente.setMclNivel(jCmbNivel.getSelectedItem().toString());
+        cliente.setMclNome(jTxtNome.getText());
+        cliente.setMclRg(jFmtRg.getText());
+        cliente.setMclSexo(jCboSexo.getSelectedItem().toString());
+        return cliente;
+    }
+    
+    public void beanView(MclClientes clientes) {
         Mcl_Util.mcl_habilitar(true, 
         jBtnAlterar,
         jBtnExcluir,
         jBtnCancelar
         );
         Mcl_Util.mcl_habilitar(false, jBtnIncluir);
-        /*
-        jTxtCodigo.setText(Integer.toString(clientes.getMcl_codigo()));
-        jTxtNome.setText(clientes.getMcl_nome());
-        jTxtApelido.setText(clientes.getMcl_apelido());
-        jCboSexo.setSelectedIndex("M".equals(clientes.getMcl_sexo()) ? 0 : 1);
-        jFmtCpf.setText(clientes.getMcl_cpf());
-        jFmtRg.setText(clientes.getMcl_rg());
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String dataNasc = formato.format(clientes.getMcl_datanascimento());
-        jFmtDataNascimento.setText(dataNasc);
-        jFmtCelular.setText(clientes.getMcl_celular());
-        jTxtEmail.setText(clientes.getMcl_email());
-        jTxtEndereco.setText(clientes.getMcl_endereco());
-        jTxtBairro.setText(clientes.getMcl_bairro());
-        jTxtCidade.setText(clientes.getMcl_cidade());
-        jFmtCep.setText(clientes.getMcl_cep());
-        jCboAtivo.setSelected(clientes.getMcl_ativo() == 1);
-        */
+        
+        jTxtCodigo.setText(Integer.toString(clientes.getMclIdClientes()));
+        jTxtNome.setText(clientes.getMclNome());
+        jTxtApelido.setText(clientes.getMclApelido());
+        jCboSexo.setSelectedIndex("M".equals(clientes.getMclSexo()) ? 0 : 1);
+        jFmtCpf.setText(clientes.getMclCpf());
+        jFmtRg.setText(clientes.getMclRg());
+        jFmtDataNascimento.setText(Mcl_Util.dateToStr(clientes.getMclDataNascimento()));
+        jFmtCelular.setText(clientes.getMclCelular());
+        jTxtEmail.setText(clientes.getMclEmail());
+        jTxtEndereco.setText(clientes.getMclEndereco());
+        jTxtBairro.setText(clientes.getMclBairro());
+        jTxtCidade.setText(clientes.getMclCidade());
+        jFmtCep.setText(clientes.getMclCep());
+        jCboAtivo.setSelected(clientes.getMclAtivo() == 1);
+        
     }
 
     /**
@@ -276,7 +296,7 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         jLblEmail.setText("E-mail");
 
         try {
-            jFmtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ## 9####-####")));
+            jFmtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -481,33 +501,12 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);
         Mcl_Util.mcl_habilitar(true, jBtnPesquisar, jBtnIncluir);
-        /*Mcl_Clientes cliente = new Mcl_Clientes();
-        cliente.setMcl_apelido(jTxtApelido.getText());
-        cliente.setMcl_ativo(jCboAtivo.isSelected() ? 1 : 0);
-        cliente.setMcl_bairro(jTxtBairro.getText());
-        cliente.setMcl_celular(jFmtCelular.getText());
-        cliente.setMcl_cep(jFmtCep.getText());
-        cliente.setMcl_cidade(jFmtCep.getText());
-        cliente.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date dataNasc = formato.parse(jFmtDataNascimento.getText());
-            cliente.setMcl_datanascimento(dataNasc);
-        } catch (ParseException ex) {
-            Logger.getLogger(JDlgMcl_Clientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        cliente.setMcl_cpf(jFmtCpf.getText());
-        cliente.setMcl_email(jTxtEmail.getText());
-        cliente.setMcl_endereco(jTxtEndereco.getText());
-        cliente.setMcl_nivel(jCmbNivel.getSelectedItem().toString());
-        cliente.setMcl_nome(jTxtNome.getText());
-        cliente.setMcl_rg(jFmtRg.getText());
-        cliente.setMcl_sexo(jCboSexo.getSelectedItem().toString());
+        
         if("incluir".equals(acao)) {
-            clientesdao.insert(cliente);
+            clientesdao.insert(viewBean());
         } else if("alterar".equals(acao)) {
-            clientesdao.update(cliente);
-        }*/
+            clientesdao.update(viewBean());
+        }
         limpar();
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
@@ -522,14 +521,12 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
-            /*Mcl_Clientes cliente = new Mcl_Clientes();
-            cliente.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
-            clientesdao.delete(cliente);*/
+            clientesdao.delete(viewBean());
             limpar();
             jBtnCancelarActionPerformed(evt);
         }
-        /*jTxtCodigo.setEnabled(false);
-        habilitar();*/
+        Mcl_Util.mcl_habilitar(false,jTxtCodigo);
+        habilitar();
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
