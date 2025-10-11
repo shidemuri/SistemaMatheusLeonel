@@ -1,5 +1,5 @@
 package bean;
-// Generated Oct 11, 2025 2:20:19 PM by Hibernate Tools 4.3.1
+// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -25,7 +25,7 @@ public class MclUsuarios  implements java.io.Serializable {
      private String mclApelido;
      private String mclCpf;
      private Date mclDataNascimento;
-     private byte mclAtivo;
+     private int mclAtivo;
      private String mclNivel;
      private String mclSenha;
 
@@ -33,7 +33,7 @@ public class MclUsuarios  implements java.io.Serializable {
     }
 
 	
-    public MclUsuarios(int mclIdUsuarios, String mclNome, String mclApelido, String mclCpf, byte mclAtivo, String mclNivel, String mclSenha) {
+    public MclUsuarios(int mclIdUsuarios, String mclNome, String mclApelido, String mclCpf, int mclAtivo, String mclNivel, String mclSenha) {
         this.mclIdUsuarios = mclIdUsuarios;
         this.mclNome = mclNome;
         this.mclApelido = mclApelido;
@@ -42,7 +42,7 @@ public class MclUsuarios  implements java.io.Serializable {
         this.mclNivel = mclNivel;
         this.mclSenha = mclSenha;
     }
-    public MclUsuarios(int mclIdUsuarios, String mclNome, String mclApelido, String mclCpf, Date mclDataNascimento, byte mclAtivo, String mclNivel, String mclSenha) {
+    public MclUsuarios(int mclIdUsuarios, String mclNome, String mclApelido, String mclCpf, Date mclDataNascimento, int mclAtivo, String mclNivel, String mclSenha) {
        this.mclIdUsuarios = mclIdUsuarios;
        this.mclNome = mclNome;
        this.mclApelido = mclApelido;
@@ -107,11 +107,11 @@ public class MclUsuarios  implements java.io.Serializable {
 
     
     @Column(name="mcl_ativo", nullable=false)
-    public byte getMclAtivo() {
+    public int getMclAtivo() {
         return this.mclAtivo;
     }
     
-    public void setMclAtivo(byte mclAtivo) {
+    public void setMclAtivo(int mclAtivo) {
         this.mclAtivo = mclAtivo;
     }
 

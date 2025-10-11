@@ -1,13 +1,10 @@
 package bean;
-// Generated Oct 11, 2025 2:20:19 PM by Hibernate Tools 4.3.1
+// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
 
 
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +21,7 @@ public class MclVendedor  implements java.io.Serializable {
      private String mclNome;
      private String mclCnpj;
      private String mclEndereco;
-     private byte mclNota;
+     private int mclNota;
      private double mclSaldo;
      private int mclVendastotais;
 
@@ -32,7 +29,7 @@ public class MclVendedor  implements java.io.Serializable {
     }
 
 	
-    public MclVendedor(int mclIdVendedor, String mclNome, String mclCnpj, String mclEndereco, byte mclNota, double mclSaldo, int mclVendastotais) {
+    public MclVendedor(int mclIdVendedor, String mclNome, String mclCnpj, String mclEndereco, int mclNota, double mclSaldo, int mclVendastotais) {
         this.mclIdVendedor = mclIdVendedor;
         this.mclNome = mclNome;
         this.mclCnpj = mclCnpj;
@@ -40,15 +37,6 @@ public class MclVendedor  implements java.io.Serializable {
         this.mclNota = mclNota;
         this.mclSaldo = mclSaldo;
         this.mclVendastotais = mclVendastotais;
-    }
-    public MclVendedor(int mclIdVendedor, String mclNome, String mclCnpj, String mclEndereco, byte mclNota, double mclSaldo, int mclVendastotais, Set mclProdutoses, Set mclVendases) {
-       this.mclIdVendedor = mclIdVendedor;
-       this.mclNome = mclNome;
-       this.mclCnpj = mclCnpj;
-       this.mclEndereco = mclEndereco;
-       this.mclNota = mclNota;
-       this.mclSaldo = mclSaldo;
-       this.mclVendastotais = mclVendastotais;
     }
    
      @Id 
@@ -95,11 +83,11 @@ public class MclVendedor  implements java.io.Serializable {
 
     
     @Column(name="mcl_nota", nullable=false)
-    public byte getMclNota() {
+    public int getMclNota() {
         return this.mclNota;
     }
     
-    public void setMclNota(byte mclNota) {
+    public void setMclNota(int mclNota) {
         this.mclNota = mclNota;
     }
 
@@ -122,7 +110,6 @@ public class MclVendedor  implements java.io.Serializable {
     public void setMclVendastotais(int mclVendastotais) {
         this.mclVendastotais = mclVendastotais;
     }
-
 
 
 

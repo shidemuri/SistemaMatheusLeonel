@@ -1,10 +1,8 @@
 package bean;
-// Generated Oct 11, 2025 2:20:19 PM by Hibernate Tools 4.3.1
+// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +34,7 @@ public class MclClientes  implements java.io.Serializable {
      private String mclBairro;
      private String mclCidade;
      private String mclCep;
-     private byte mclAtivo;
+     private int mclAtivo;
      private String mclNivel;
      private String mclSexo;
 
@@ -44,7 +42,7 @@ public class MclClientes  implements java.io.Serializable {
     }
 
 	
-    public MclClientes(int mclIdClientes, String mclNome, String mclApelido, String mclCpf, String mclRg, String mclCelular, String mclEmail, String mclEndereco, String mclBairro, String mclCidade, String mclCep, byte mclAtivo, String mclNivel, String mclSexo) {
+    public MclClientes(int mclIdClientes, String mclNome, String mclApelido, String mclCpf, String mclRg, String mclCelular, String mclEmail, String mclEndereco, String mclBairro, String mclCidade, String mclCep, int mclAtivo, String mclNivel, String mclSexo) {
         this.mclIdClientes = mclIdClientes;
         this.mclNome = mclNome;
         this.mclApelido = mclApelido;
@@ -60,7 +58,7 @@ public class MclClientes  implements java.io.Serializable {
         this.mclNivel = mclNivel;
         this.mclSexo = mclSexo;
     }
-    public MclClientes(int mclIdClientes, String mclNome, String mclApelido, String mclCpf, String mclRg, Date mclDataNascimento, String mclCelular, String mclEmail, String mclEndereco, String mclBairro, String mclCidade, String mclCep, byte mclAtivo, String mclNivel, String mclSexo, Set mclVendases) {
+    public MclClientes(int mclIdClientes, String mclNome, String mclApelido, String mclCpf, String mclRg, Date mclDataNascimento, String mclCelular, String mclEmail, String mclEndereco, String mclBairro, String mclCidade, String mclCep, int mclAtivo, String mclNivel, String mclSexo) {
        this.mclIdClientes = mclIdClientes;
        this.mclNome = mclNome;
        this.mclApelido = mclApelido;
@@ -202,11 +200,11 @@ public class MclClientes  implements java.io.Serializable {
 
     
     @Column(name="mcl_ativo", nullable=false)
-    public byte getMclAtivo() {
+    public int getMclAtivo() {
         return this.mclAtivo;
     }
     
-    public void setMclAtivo(byte mclAtivo) {
+    public void setMclAtivo(int mclAtivo) {
         this.mclAtivo = mclAtivo;
     }
 
@@ -229,9 +227,6 @@ public class MclClientes  implements java.io.Serializable {
     public void setMclSexo(String mclSexo) {
         this.mclSexo = mclSexo;
     }
-
-
-
 
 }
 

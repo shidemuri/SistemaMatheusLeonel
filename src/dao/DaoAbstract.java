@@ -22,6 +22,6 @@ public abstract class DaoAbstract {
     public abstract void insert(Object objeto);
     public abstract void update(Object objeto);
     public abstract void delete(Object objeto);
-    public abstract Object list(int codigo);
-    public abstract List listAll();
+    public abstract Object list(Object bean, int codigo);
+    public abstract List listAll(Object bean);
 }
