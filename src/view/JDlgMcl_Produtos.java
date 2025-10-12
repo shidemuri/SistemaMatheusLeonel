@@ -30,8 +30,9 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         setLocationRelativeTo(null);   
         habilitar(false);
         List vendedores = (List) produtosdao.listAll(new MclVendedor());
-        for (int i = 0; i < vendedores.size(); i++) {
-            jCboVendedor.addItem((MclVendedor) vendedores.get(i));
+        for (Object vendedor : vendedores) {
+            jCboVendedor.addItem((MclVendedor) vendedor);
+
         }
     }
     
@@ -87,6 +88,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jBtnAlterar,
         jBtnExcluir,
         jBtnCancelar);
+        jCboVendedor.setSelectedItem(produtos.getMclVendedor());
         jTxtCodigo.setText(Mcl_Util.intToStr(produtos.getMclIdProdutos()));
         jTxtFabricante.setText(produtos.getMclFabricante());
         jTxtModelo.setText(produtos.getMclModelo());
@@ -96,7 +98,6 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtDescricao.setText(produtos.getMclDescricao());
         jTxtPreco.setText(Mcl_Util.doubleToStr(produtos.getMclPreco()));
         jChbEmEstoque.setSelected(produtos.getMclEmestoque() == 1);
-        jCboVendedor.setSelectedItem(produtos.getMclVendedor());
     }
     
     public MclProdutos viewBean(){
@@ -292,7 +293,13 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLblPreco)
+                                    .addComponent(jLblFkUsuario))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jCboVendedor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jTxtAno)
                                     .addComponent(jLblHora3, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTxtMatricula, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
@@ -302,13 +309,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
                                     .addComponent(jTxtPreco)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jChbEmEstoque)
-                                        .addGap(36, 36, 36))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLblPreco)
-                                    .addComponent(jLblFkUsuario)
-                                    .addComponent(jCboVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addGap(36, 36, 36)))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -395,8 +396,17 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);
         
-        if("incluir".equals(acao)) produtosdao.insert(viewBean());
-        else if("alterar".equals(acao)) produtosdao.update(viewBean());
+        try{
+            if("incluir".equals(acao)) {
+                produtosdao.insert(viewBean());
+            } else if("alterar".equals(acao)) {
+                produtosdao.update(viewBean());
+            }
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+        } catch(Throwable e) {
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+            Mcl_Util.mcl_mensagem(e.toString());
+        }
         
         limpar();
         
@@ -416,9 +426,22 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
-            produtosdao.delete(viewBean());
+            try{
+                produtosdao.delete(viewBean());
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+            } catch(Throwable e) {
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+                Mcl_Util.mcl_mensagem(e.toString());
+            }
             limpar();
             jBtnCancelarActionPerformed(evt);
+        } else {
+            Mcl_Util.mcl_habilitar(true, 
+            jBtnAlterar,
+            jBtnExcluir,
+            jBtnCancelar
+            );
+            Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 

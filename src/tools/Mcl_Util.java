@@ -4,6 +4,7 @@
  */
 package tools;
 
+import java.io.BufferedInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JCheckBox;
@@ -11,6 +12,16 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.time.format.DateTimeParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -27,6 +38,10 @@ public class Mcl_Util {
             if(componente instanceof JTextField) {
                 ((JTextField) componente).setText("");
             }
+            if(componente instanceof JTextArea) {
+                ((JTextArea) componente).setText("");
+            }
+            
             if(componente instanceof JComboBox) {
                 ((JComboBox) componente).setSelectedIndex(0);
             }
@@ -44,15 +59,38 @@ public class Mcl_Util {
     public static void mcl_mensagem(String mensagem) {
         JOptionPane.showMessageDialog(null, mensagem);
     }
+    public static void tocarSom(String som){
+        try {
+            URL stream = new URL(som);
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(stream);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
     public static int strToInt(String str){
-        return Integer.valueOf(str);
+        try {
+            return Integer.valueOf(str);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("Falha ao converter para número inteiro: " + str);
+        }
     }
     
     public static double strToDouble(String str) {
-        return Double.valueOf(str);
+        try {
+            return Double.valueOf(str);
+        } catch(NumberFormatException e) {
+            throw new IllegalArgumentException("Falha ao converter para número decimal: " + str);
+        }
     }
     public static Date strToDate(String str) {
-        return new Date(str);
+        try{
+            return new Date(str);
+        } catch(DateTimeParseException e) {
+            throw new IllegalArgumentException("Falha ao converter para data: " + str);
+        }
     }
     public static String intToStr(int num) {
         return String.valueOf(num);
@@ -63,5 +101,4 @@ public class Mcl_Util {
     public static String dateToStr(Date num) {
         return (new SimpleDateFormat("dd/MM/yyyy")).format(num);
     }
-    
 }

@@ -324,8 +324,17 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);        
-        if("incluir".equals(acao)) vendedordao.insert(viewBean());
-        else if("alterar".equals(acao)) vendedordao.update(viewBean());
+        try{
+            if("incluir".equals(acao)) {
+                vendedordao.insert(viewBean());
+            } else if("alterar".equals(acao)) {
+                vendedordao.update(viewBean());
+            }
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+        } catch(Throwable e) {
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+            Mcl_Util.mcl_mensagem(e.toString());
+        }
         limpar();
         Mcl_Util.mcl_habilitar(true, jBtnIncluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
@@ -338,16 +347,23 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        /*int resp = JOptionPane.showConfirmDialog(null, "Deseja excluir?", "Confirmação", JOptionPane.YES_NO_OPTION);      // TODO add your handling code here:
-        if (resp == JOptionPane.YES_OPTION) {
-            Mcl_Vendedor vendedor = new Mcl_Vendedor();
-            vendedor.setMcl_codigo(Mcl_Util.strToInt(jTxtCodigo.getText()));
-            vendedordao.delete(vendedor);
-        }*/
-        if(Mcl_Util.mcl_confirmar("Deseja excluir?")) {
-            vendedordao.delete(viewBean());
+        if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
+            try{
+                vendedordao.delete(viewBean());
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+            } catch(Throwable e) {
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+                Mcl_Util.mcl_mensagem(e.toString());
+            }
             limpar();
             jBtnCancelarActionPerformed(evt);
+        } else {
+            Mcl_Util.mcl_habilitar(true, 
+            jBtnAlterar,
+            jBtnExcluir,
+            jBtnCancelar
+            );
+            Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 

@@ -103,6 +103,7 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         cliente.setMclCep(jFmtCep.getText());
         cliente.setMclCidade(jFmtCep.getText());
         cliente.setMclIdClientes(Mcl_Util.strToInt(jTxtCodigo.getText()));
+        cliente.setMclDataNascimento(Mcl_Util.strToDate(jFmtDataNascimento.getText()));
         cliente.setMclCpf(jFmtCpf.getText());
         cliente.setMclEmail(jTxtEmail.getText());
         cliente.setMclEndereco(jTxtEndereco.getText());
@@ -501,12 +502,18 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);
         Mcl_Util.mcl_habilitar(true, jBtnPesquisar, jBtnIncluir);
-        
-        if("incluir".equals(acao)) {
-            clientesdao.insert(viewBean());
-        } else if("alterar".equals(acao)) {
-            clientesdao.update(viewBean());
+        try{
+            if("incluir".equals(acao)) {
+                clientesdao.insert(viewBean());
+            } else if("alterar".equals(acao)) {
+                clientesdao.update(viewBean());
+            }
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+        } catch(Throwable e) {
+            Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+            Mcl_Util.mcl_mensagem(e.toString());
         }
+        
         limpar();
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
@@ -521,12 +528,23 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
-            clientesdao.delete(viewBean());
+            try{
+                clientesdao.delete(viewBean());
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
+            } catch(Throwable e) {
+                Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
+                Mcl_Util.mcl_mensagem(e.toString());
+            }
             limpar();
             jBtnCancelarActionPerformed(evt);
+        } else {
+            Mcl_Util.mcl_habilitar(true, 
+            jBtnAlterar,
+            jBtnExcluir,
+            jBtnCancelar
+            );
+            Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         }
-        Mcl_Util.mcl_habilitar(false,jTxtCodigo);
-        habilitar();
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
     private void jBtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPesquisarActionPerformed
