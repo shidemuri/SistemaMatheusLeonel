@@ -4,6 +4,7 @@
  */
 package tools;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -40,6 +41,9 @@ public class Mcl_Util {
     public static String mcl_perguntar(String mensagem) {
         return JOptionPane.showInputDialog(null, mensagem);
     }
+    public static void mcl_mensagem(String mensagem) {
+        JOptionPane.showMessageDialog(null, mensagem);
+    }
     public static int strToInt(String str){
         return Integer.valueOf(str);
     }
@@ -54,10 +58,10 @@ public class Mcl_Util {
         return String.valueOf(num);
     }
     public static String doubleToStr(double num) {
-        return "";
+        return String.valueOf(num);
     }
     public static String dateToStr(Date num) {
-        return "";
+        return (new SimpleDateFormat("dd/MM/yyyy")).format(num);
     }
     
 }

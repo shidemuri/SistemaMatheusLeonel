@@ -6,6 +6,10 @@ package view;
 
 import javax.swing.JOptionPane;
 import tools.Mcl_Util;
+import bean.MclVendedor;
+import bean.MclProdutos;
+import dao.DaoGeneric;
+import java.util.List;
 
 /**
  *
@@ -14,7 +18,7 @@ import tools.Mcl_Util;
 public class JDlgMcl_Produtos extends javax.swing.JDialog {
     
     private String acao = "incluir";
-    
+    DaoGeneric produtosdao = new DaoGeneric();
     
     /**
      * Creates new form JDlgUsuarios
@@ -25,6 +29,10 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         setTitle("Cadastro de Produtos");
         setLocationRelativeTo(null);   
         habilitar(false);
+        List vendedores = (List) produtosdao.listAll(new MclVendedor());
+        for (int i = 0; i < vendedores.size(); i++) {
+            jCboVendedor.addItem((MclVendedor) vendedores.get(i));
+        }
     }
     
     public void habilitar(boolean value){
@@ -37,7 +45,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtDescricao,
         jTxtPreco,
         jChbEmEstoque,
-        jTxtFkVendedor,
+        jCboVendedor,
         
         jBtnConfirmar,
         jBtnCancelar,
@@ -54,7 +62,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtDescricao,
         jTxtPreco,
         jChbEmEstoque,
-        jTxtFkVendedor,
+        jCboVendedor,
         
         jBtnConfirmar,
         jBtnCancelar,
@@ -71,25 +79,39 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtDescricao,
         jTxtPreco,
         jChbEmEstoque,
-        jTxtFkVendedor);
+        jCboVendedor);
     }
-    public void beanView() {
+    public void beanView(MclProdutos produtos) {
         Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         Mcl_Util.mcl_habilitar(true, 
         jBtnAlterar,
         jBtnExcluir,
         jBtnCancelar);
-        /*
-        jTxtCodigo.setText(Integer.toString(produtos.getMcl_codigo()));
-        jTxtFabricante.setText(produtos.getMcl_fabricante());
-        jTxtModelo.setText(produtos.getMcl_modelo());
-        jTxtAno.setText(Integer.toString(produtos.getMcl_ano()));
-        jTxtMatricula.setText(produtos.getMcl_matricula());
-        jTxtHorasVoo.setText(Integer.toString(produtos.getMcl_horasvoo()));
-        jTxtDescricao.setText(produtos.getMcl_descricao());
-        jTxtPreco.setText(Double.toString(produtos.getMcl_preco()));
-        jChbEmEstoque.setSelected(produtos.getMcl_emestoque() == 1);
-        jTxtFkVendedor.setText("");*/
+        jTxtCodigo.setText(Mcl_Util.intToStr(produtos.getMclIdProdutos()));
+        jTxtFabricante.setText(produtos.getMclFabricante());
+        jTxtModelo.setText(produtos.getMclModelo());
+        jTxtAno.setText(Mcl_Util.intToStr(produtos.getMclAno()));
+        jTxtMatricula.setText(produtos.getMclMatricula());
+        jTxtHorasVoo.setText(Mcl_Util.intToStr(produtos.getMclHorasvoo()));
+        jTxtDescricao.setText(produtos.getMclDescricao());
+        jTxtPreco.setText(Mcl_Util.doubleToStr(produtos.getMclPreco()));
+        jChbEmEstoque.setSelected(produtos.getMclEmestoque() == 1);
+        jCboVendedor.setSelectedItem(produtos.getMclVendedor());
+    }
+    
+    public MclProdutos viewBean(){
+        MclProdutos mcl_produtos = new MclProdutos();
+        mcl_produtos.setMclIdProdutos(Mcl_Util.strToInt(jTxtCodigo.getText()));
+        mcl_produtos.setMclFabricante(jTxtFabricante.getText());
+        mcl_produtos.setMclModelo(jTxtModelo.getText());
+        mcl_produtos.setMclAno(Mcl_Util.strToInt(jTxtAno.getText()));
+        mcl_produtos.setMclMatricula(jTxtMatricula.getText());
+        mcl_produtos.setMclHorasvoo(Mcl_Util.strToInt(jTxtHorasVoo.getText()));
+        mcl_produtos.setMclDescricao(jTxtDescricao.getText());
+        mcl_produtos.setMclPreco(Mcl_Util.strToDouble(jTxtPreco.getText()));
+        mcl_produtos.setMclEmestoque(jChbEmEstoque.isSelected() ? 1 : 0);
+        mcl_produtos.setMclVendedor((MclVendedor) jCboVendedor.getSelectedItem());
+        return mcl_produtos;
     }
 
     /**
@@ -117,7 +139,6 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTxtDescricao = new javax.swing.JTextArea();
         jLblDescricao = new javax.swing.JLabel();
-        jTxtFkVendedor = new javax.swing.JTextField();
         jTxtFabricante = new javax.swing.JTextField();
         jLblHora1 = new javax.swing.JLabel();
         jTxtModelo = new javax.swing.JTextField();
@@ -129,6 +150,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtAno = new javax.swing.JTextField();
         jTxtPreco = new javax.swing.JTextField();
         jTxtHorasVoo = new javax.swing.JTextField();
+        jCboVendedor = new javax.swing.JComboBox<MclVendedor>();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -196,7 +218,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
 
         jLblPreco.setText("Preço");
 
-        jLblFkUsuario.setText("Código do usuário que está vendendo");
+        jLblFkUsuario.setText("Vendedor");
 
         jTxtDescricao.setColumns(20);
         jTxtDescricao.setRows(5);
@@ -204,8 +226,6 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTxtDescricao);
 
         jLblDescricao.setText("Descrição");
-
-        jTxtFkVendedor.setEnabled(false);
 
         jTxtFabricante.setEnabled(false);
 
@@ -229,6 +249,8 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
         jTxtPreco.setEnabled(false);
 
         jTxtHorasVoo.setEnabled(false);
+
+        jCboVendedor.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,12 +291,6 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTxtFkVendedor, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLblPreco)
-                                    .addComponent(jLblFkUsuario))
-                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTxtAno)
@@ -286,7 +302,13 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
                                     .addComponent(jTxtPreco)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addComponent(jChbEmEstoque)
-                                        .addGap(36, 36, 36)))))))
+                                        .addGap(36, 36, 36))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLblPreco)
+                                    .addComponent(jLblFkUsuario)
+                                    .addComponent(jCboVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -346,7 +368,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLblFkUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtFkVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCboVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -371,20 +393,10 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-        habilitar(false);/*
-        Mcl_Produtos mcl_produtos = new Mcl_Produtos();
-        mcl_produtos.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
-        mcl_produtos.setMcl_fabricante(jTxtFabricante.getText());
-        mcl_produtos.setMcl_modelo(jTxtModelo.getText());
-        mcl_produtos.setMcl_ano(Integer.parseInt(jTxtAno.getText()));
-        mcl_produtos.setMcl_matricula(jTxtMatricula.getText());
-        mcl_produtos.setMcl_horasvoo(Integer.parseInt(jTxtHorasVoo.getText()));
-        mcl_produtos.setMcl_descricao(jTxtDescricao.getText());
-        mcl_produtos.setMcl_preco(Double.parseDouble(jTxtPreco.getText()));
-        mcl_produtos.setMcl_emestoque(jChbEmEstoque.isSelected() ? 1 : 0);
-        mcl_produtos.setMcl_fkvendedor(Integer.parseInt(jTxtFkVendedor.getText()));
-        if("incluir".equals(acao)) produtosdao.insert(mcl_produtos);
-        else if("alterar".equals(acao)) produtosdao.update(mcl_produtos);*/
+        habilitar(false);
+        
+        if("incluir".equals(acao)) produtosdao.insert(viewBean());
+        else if("alterar".equals(acao)) produtosdao.update(viewBean());
         
         limpar();
         
@@ -404,6 +416,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
+            produtosdao.delete(viewBean());
             limpar();
             jBtnCancelarActionPerformed(evt);
         }
@@ -481,6 +494,7 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JButton jBtnIncluir;
     private javax.swing.JButton jBtnPesquisar;
+    private javax.swing.JComboBox<MclVendedor> jCboVendedor;
     private javax.swing.JCheckBox jChbEmEstoque;
     private javax.swing.JLabel jLblCodigo;
     private javax.swing.JLabel jLblDescricao;
@@ -498,7 +512,6 @@ public class JDlgMcl_Produtos extends javax.swing.JDialog {
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextArea jTxtDescricao;
     private javax.swing.JTextField jTxtFabricante;
-    private javax.swing.JTextField jTxtFkVendedor;
     private javax.swing.JTextField jTxtHorasVoo;
     private javax.swing.JTextField jTxtMatricula;
     private javax.swing.JTextField jTxtModelo;

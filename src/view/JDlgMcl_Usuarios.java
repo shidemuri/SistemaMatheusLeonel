@@ -5,6 +5,8 @@
 package view;
 
 import tools.Mcl_Util;
+import bean.MclUsuarios;
+import dao.DaoGeneric;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class JDlgMcl_Usuarios extends javax.swing.JDialog {
     private String acao = "incluir";
-    
+    DaoGeneric usuariosdao = new DaoGeneric();
     /**
      * Creates new form JDlgUsuarios
      */
@@ -75,22 +77,31 @@ public class JDlgMcl_Usuarios extends javax.swing.JDialog {
         jCmbNivel);
     }
     
-    public void beanView(/*Mcl_Usuarios usuario*/) {
+    public void beanView(MclUsuarios usuario) {
         Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         Mcl_Util.mcl_habilitar(true, jBtnAlterar, jBtnExcluir, jBtnCancelar);
         
-        /*
-        
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        String dataNasc = formato.format(usuario.getMcl_dataNascimento());
-        jTxtApelido.setText(usuario.getMcl_apelido());
-        jTxtCodigo.setText(Integer.toString(usuario.getMcl_codigo()));
-        jTxtNome.setText(usuario.getMcl_nome());
-        jFmtCpf.setText(usuario.getMcl_cpf());
-        jPwfSenha.setText(usuario.getMcl_senha());
-        jFmtDataNascimento.setText(dataNasc);
-        jChbAtivo.setSelected(usuario.getMcl_ativo() == 1);
-        jCmbNivel.setSelectedIndex("Cliente".equals(usuario.getMcl_nivel()) ? 0 : "Vendedor".equals(usuario.getMcl_nivel()) ? 1 : 2);*/
+        jTxtApelido.setText(usuario.getMclApelido());
+        jTxtCodigo.setText(Mcl_Util.intToStr(usuario.getMclIdUsuarios()));
+        jTxtNome.setText(usuario.getMclNome());
+        jFmtCpf.setText(usuario.getMclCpf());
+        jPwfSenha.setText(usuario.getMclSenha());
+        jFmtDataNascimento.setText(Mcl_Util.dateToStr(usuario.getMclDataNascimento()));
+        jChbAtivo.setSelected(usuario.getMclAtivo() == 1);
+        jCmbNivel.setSelectedIndex("Cliente".equals(usuario.getMclNivel()) ? 0 : "Vendedor".equals(usuario.getMclNivel()) ? 1 : 2);
+    }
+    
+    public MclUsuarios viewBean() {
+        MclUsuarios usuario = new MclUsuarios();
+        usuario.setMclApelido(jTxtApelido.getText());
+        usuario.setMclAtivo(jChbAtivo.isSelected() ? 1 : 0);
+        usuario.setMclIdUsuarios(Mcl_Util.strToInt(jTxtCodigo.getText()));
+        usuario.setMclCpf(jFmtCpf.getText());
+        usuario.setMclDataNascimento(Mcl_Util.strToDate(jFmtDataNascimento.getText()));
+        usuario.setMclNivel(jCmbNivel.getSelectedItem().toString());
+        usuario.setMclNome(jTxtNome.getText());
+        usuario.setMclSenha(jPwfSenha.getText());
+        return usuario;
     }
     
     
@@ -337,23 +348,9 @@ public class JDlgMcl_Usuarios extends javax.swing.JDialog {
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);
-        /*Mcl_Usuarios usuario = new Mcl_Usuarios();
-        usuario.setMcl_apelido(jTxtApelido.getText());
-        usuario.setMcl_ativo(jChbAtivo.isSelected() ? 1 : 0);
-        usuario.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
-        usuario.setMcl_cpf(jFmtCpf.getText());
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            Date dataNasc = formato.parse(jFmtDataNascimento.getText());
-            usuario.setMcl_dataNascimento(dataNasc);
-        } catch (ParseException ex) {
-            Logger.getLogger(JDlgMcl_Clientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        usuario.setMcl_nivel(jCmbNivel.getSelectedItem().toString());
-        usuario.setMcl_nome(jTxtNome.getText());
-        usuario.setMcl_senha(jPwfSenha.getText());
-        if("incluir".equals(acao)) usuariosdao.insert(usuario);
-        else if("alterar".equals(acao)) usuariosdao.update(usuario);*/
+        if("incluir".equals(acao)) usuariosdao.insert(viewBean());
+        else if("alterar".equals(acao)) usuariosdao.update(viewBean());
+        
         limpar();
         Mcl_Util.mcl_habilitar(true, jBtnPesquisar, jBtnIncluir);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
@@ -369,10 +366,11 @@ public class JDlgMcl_Usuarios extends javax.swing.JDialog {
         /*int resp = JOptionPane.showConfirmDialog(null, "Deseja excluir?", "Confirmação", JOptionPane.YES_NO_OPTION);      // TODO add your handling code here:
         if (resp == JOptionPane.YES_OPTION) {
             Mcl_Usuarios usuario = new Mcl_Usuarios();
-            usuario.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
+            usuario.setMcl_codigo(Mcl_Util.strToInt(jTxtCodigo.getText()));
             usuariosdao.delete(usuario);
         }*/
         if(Mcl_Util.mcl_confirmar("Deseja excluir?")) {
+            usuariosdao.delete(viewBean());
             limpar();
             jBtnCancelarActionPerformed(evt);
         }

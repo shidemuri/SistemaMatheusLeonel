@@ -6,6 +6,9 @@ package view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import bean.MclUsuarios;
+import dao.DaoGeneric;
+import tools.Mcl_Util;
 
 /**
  *
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
 public class JDlgMcl_UsuariosPesquisar extends javax.swing.JDialog {
 
     JDlgMcl_Usuarios jDlgMcl_Usuarios;
+    Mcl_ControllerUsuarios mcl_ControllerUsuarios;
     /**
      * Creates new form JDlgUsuariosPesquisar
      */ 
@@ -22,11 +26,11 @@ public class JDlgMcl_UsuariosPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Resultados da pesquisa");
-        //Mcl_UsuariosDao usuariosdao = new Mcl_UsuariosDao();
-        //List lista = (List) usuariosdao.listAll();
-        //mcl_ControllerUsuarios = new Mcl_ControllerUsuarios();
-        //mcl_ControllerUsuarios.setlist(lista);
-        //jTable1.setModel(mcl_ControllerUsuarios);
+        DaoGeneric usuariosdao = new DaoGeneric();
+        List lista = (List) usuariosdao.listAll(new MclUsuarios());
+        mcl_ControllerUsuarios = new Mcl_ControllerUsuarios();
+        mcl_ControllerUsuarios.setlist(lista);
+        jTable1.setModel(mcl_ControllerUsuarios);
                 
     }
     
@@ -99,13 +103,13 @@ public class JDlgMcl_UsuariosPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        /*int linSel = jTable1.getSelectedRow();
+        int linSel = jTable1.getSelectedRow();
         if(linSel == -1) {
-            JOptionPane.showMessageDialog(null, "Escolha uma linha primeiro.");
+            Mcl_Util.mcl_mensagem("Escolha uma linha primeiro.");
             return;
-        }*/
-        //Mcl_Usuarios usuarios = (Mcl_Usuarios) mcl_ControllerUsuarios.getBean(linSel);
-        jDlgMcl_Usuarios.beanView(/*usuarios*/);
+        }
+        MclUsuarios usuarios = (MclUsuarios) mcl_ControllerUsuarios.getBean(linSel);
+        jDlgMcl_Usuarios.beanView(usuarios);
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 

@@ -6,6 +6,9 @@ package view;
 
 import tools.Mcl_Util;
 import javax.swing.JOptionPane;
+import bean.MclVendedor;
+import dao.DaoGeneric;
+
 
 /**
  *
@@ -14,7 +17,7 @@ import javax.swing.JOptionPane;
 public class JDlgMcl_Vendedor extends javax.swing.JDialog {
 
     private String acao = "incluir";
-    //Mcl_VendedorDao vendedordao = new Mcl_VendedorDao();
+    DaoGeneric vendedordao = new DaoGeneric();
     
     /**
      * Creates new form JDlgUsuarios
@@ -33,7 +36,7 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
         jTxtEndereco,
         jTxtNota,
         jTxtNome,
-        jTxtCnpj,
+        jFmtCnpj,
         jTxtSaldo,
         jTxtVendasTotais,
         
@@ -47,7 +50,7 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
         jTxtEndereco,
         jTxtNota,
         jTxtNome,
-        jTxtCnpj,
+        jFmtCnpj,
         jTxtSaldo,
         jTxtVendasTotais,
         
@@ -63,25 +66,35 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
         jTxtEndereco,
         jTxtNota,
         jTxtNome,
-        jTxtCnpj,
+        jFmtCnpj,
         jTxtSaldo,
         jTxtVendasTotais);
     }
     
-    public void beanView(/*Mcl_Vendedor vendedor*/){
+    public void beanView(MclVendedor vendedor){
         
         Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         Mcl_Util.mcl_habilitar(true, jBtnAlterar, jBtnExcluir, jBtnCancelar);
         
-        /*
-        jTxtCodigo.setText(Integer.toString(vendedor.getMcl_codigo()));
-        jTxtEndereco.setText(vendedor.getMcl_endereco());
-        jTxtNota.setText(Integer.toString(vendedor.getMcl_nota()));
-        jTxtNome.setText(vendedor.getMcl_nome());
-        jTxtCnpj.setText(vendedor.getMcl_cnpj());
-        jTxtSaldo.setText(Double.toString(vendedor.getMcl_saldo()));
-        jTxtVendasTotais.setText(Integer.toString(vendedor.getMcl_vendasTotais()));
-        */
+        jTxtCodigo.setText(Mcl_Util.intToStr(vendedor.getMclIdVendedor()));
+        jTxtEndereco.setText(vendedor.getMclEndereco());
+        jTxtNota.setText(Mcl_Util.intToStr(vendedor.getMclNota()));
+        jTxtNome.setText(vendedor.getMclNome());
+        jFmtCnpj.setText(vendedor.getMclCnpj());
+        jTxtSaldo.setText(Mcl_Util.doubleToStr(vendedor.getMclSaldo()));
+        jTxtVendasTotais.setText(Mcl_Util.intToStr(vendedor.getMclVendastotais()));
+    }
+    
+    public MclVendedor viewBean() {
+        MclVendedor vendedor = new MclVendedor();
+        vendedor.setMclCnpj(jFmtCnpj.getText());
+        vendedor.setMclIdVendedor(Mcl_Util.strToInt(jTxtCodigo.getText()));
+        vendedor.setMclEndereco(jTxtEndereco.getText());
+        vendedor.setMclNome(jTxtNome.getText());
+        vendedor.setMclNota(Mcl_Util.strToInt(jTxtNota.getText()));
+        vendedor.setMclSaldo(Mcl_Util.strToDouble(jTxtSaldo.getText()));
+        vendedor.setMclVendastotais(Mcl_Util.strToInt(jTxtVendasTotais.getText()));
+        return vendedor;
     }
 
     /**
@@ -113,8 +126,8 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
         jTxtNota = new javax.swing.JTextField();
         jTxtVendasTotais = new javax.swing.JTextField();
         jTxtNome = new javax.swing.JTextField();
-        jTxtCnpj = new javax.swing.JTextField();
         jTxtSaldo = new javax.swing.JTextField();
+        jFmtCnpj = new javax.swing.JFormattedTextField();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -180,7 +193,7 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
 
         jTxtEndereco.setEnabled(false);
 
-        jLblNota.setText("Nota");
+        jLblNota.setText("Nota (0-10)");
 
         jLblFotoUrl.setText("CNPJ");
 
@@ -194,9 +207,14 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
 
         jTxtNome.setEnabled(false);
 
-        jTxtCnpj.setEnabled(false);
-
         jTxtSaldo.setEnabled(false);
+
+        try {
+            jFmtCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFmtCnpj.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,11 +228,7 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTxtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTxtCnpj))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLblCodigo)
                                     .addComponent(jLblHora)
                                     .addComponent(jLblTipo)
@@ -222,8 +236,13 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
                                         .addComponent(jLblNota)
                                         .addGap(50, 50, 50)
                                         .addComponent(jLblFotoUrl))
-                                    .addComponent(jTxtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jTxtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jFmtCnpj))
+                                        .addComponent(jTxtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTxtVendasTotais)
                                     .addGroup(layout.createSequentialGroup()
@@ -273,8 +292,8 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFmtCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -304,18 +323,9 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnIncluirActionPerformed
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
-        habilitar(false);
-        /*
-        Mcl_Vendedor vendedor = new Mcl_Vendedor();
-        vendedor.setMcl_cnpj(jTxtCnpj.getText());
-        vendedor.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
-        vendedor.setMcl_endereco(jTxtEndereco.getText());
-        vendedor.setMcl_nome(jTxtNome.getText());
-        vendedor.setMcl_nota(Integer.parseInt(jTxtNota.getText()));
-        vendedor.setMcl_saldo(Double.parseDouble(jTxtSaldo.getText()));
-        vendedor.setMcl_vendasTotais(Integer.parseInt(jTxtVendasTotais.getText()));
-        if("incluir".equals(acao)) vendedordao.insert(vendedor);
-        else if("alterar".equals(acao)) vendedordao.update(vendedor);*/
+        habilitar(false);        
+        if("incluir".equals(acao)) vendedordao.insert(viewBean());
+        else if("alterar".equals(acao)) vendedordao.update(viewBean());
         limpar();
         Mcl_Util.mcl_habilitar(true, jBtnIncluir, jBtnPesquisar);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
@@ -331,10 +341,11 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
         /*int resp = JOptionPane.showConfirmDialog(null, "Deseja excluir?", "Confirmação", JOptionPane.YES_NO_OPTION);      // TODO add your handling code here:
         if (resp == JOptionPane.YES_OPTION) {
             Mcl_Vendedor vendedor = new Mcl_Vendedor();
-            vendedor.setMcl_codigo(Integer.parseInt(jTxtCodigo.getText()));
+            vendedor.setMcl_codigo(Mcl_Util.strToInt(jTxtCodigo.getText()));
             vendedordao.delete(vendedor);
         }*/
         if(Mcl_Util.mcl_confirmar("Deseja excluir?")) {
+            vendedordao.delete(viewBean());
             limpar();
             jBtnCancelarActionPerformed(evt);
         }
@@ -428,6 +439,7 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JButton jBtnIncluir;
     private javax.swing.JButton jBtnPesquisar;
+    private javax.swing.JFormattedTextField jFmtCnpj;
     private javax.swing.JLabel jLblCodigo;
     private javax.swing.JLabel jLblFkProduto;
     private javax.swing.JLabel jLblFkUsuario;
@@ -437,7 +449,6 @@ public class JDlgMcl_Vendedor extends javax.swing.JDialog {
     private javax.swing.JLabel jLblTipo;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTxtCnpj;
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextField jTxtEndereco;
     private javax.swing.JTextField jTxtNome;

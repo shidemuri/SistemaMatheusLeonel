@@ -7,6 +7,7 @@ import bean.MclClientes;
 import dao.DaoGeneric;
 import java.util.List;
 import javax.swing.JOptionPane;
+import tools.Mcl_Util;
 
 /**
  *
@@ -107,7 +108,7 @@ public class JDlgMcl_ClientesPesquisar extends javax.swing.JDialog {
         // TODO add your handling code here:
         int linSel = jTable1.getSelectedRow();
         if(linSel == -1) {
-            JOptionPane.showMessageDialog(null, "Escolha uma linha primeiro.");
+            Mcl_Util.mcl_mensagem("Escolha uma linha primeiro.");
             return;
         }
         MclClientes clientes = (MclClientes) mcl_ControllerClientes.getBean(linSel);

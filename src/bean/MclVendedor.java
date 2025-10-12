@@ -110,7 +110,11 @@ public class MclVendedor  implements java.io.Serializable {
     public void setMclVendastotais(int mclVendastotais) {
         this.mclVendastotais = mclVendastotais;
     }
-
+    
+    @Override
+    public String toString(){
+        return this.getMclNome();
+    }
 
 
 }

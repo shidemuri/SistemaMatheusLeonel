@@ -48,12 +48,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="jTxtNota" min="-2" pref="70" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jTxtCnpj" max="32767" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLblCodigo" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLblHora" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLblTipo" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -62,9 +57,16 @@
                                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                       <Component id="jLblFotoUrl" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="jTxtEndereco" min="-2" pref="386" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jTxtNota" min="-2" pref="70" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jFmtCnpj" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="jTxtEndereco" min="-2" pref="386" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jTxtVendasTotais" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
@@ -127,8 +129,8 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jTxtNota" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTxtCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTxtSaldo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jFmtCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="12" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -241,7 +243,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLblNota">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nota"/>
+        <Property name="text" type="java.lang.String" value="Nota (0-10)"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLblFotoUrl">
@@ -274,13 +276,16 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTxtCnpj">
+    <Component class="javax.swing.JTextField" name="jTxtSaldo">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTxtSaldo">
+    <Component class="javax.swing.JFormattedTextField" name="jFmtCnpj">
       <Properties>
+        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+          <Format format="##.###.###/####-##" subtype="-1" type="5"/>
+        </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>

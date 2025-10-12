@@ -4,10 +4,11 @@
  */
 package view;
 
-//import bean.Mcl_Vendedor;
-//import dao.Mcl_VendedorDao;
+import bean.MclVendedor;
+import dao.DaoGeneric;
 import java.util.List;
 import javax.swing.JOptionPane;
+import tools.Mcl_Util;
 
 /**
  *
@@ -16,7 +17,7 @@ import javax.swing.JOptionPane;
 public class JDlgMcl_VendedorPesquisar extends javax.swing.JDialog {
 
     JDlgMcl_Vendedor jDlgMcl_Vendedor;
-    //Mcl_ControllerVendedor mcl_ControllerVendedor;
+    Mcl_ControllerVendedor mcl_ControllerVendedor;
     /**
      * Creates new form JDlgVendedorPesquisar
      */ 
@@ -25,11 +26,11 @@ public class JDlgMcl_VendedorPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Resultados da pesquisa");
-        //Mcl_VendedorDao vendedordao = new Mcl_VendedorDao();
-        //List lista = (List) vendedordao.listAll();
-        //mcl_ControllerVendedor = new Mcl_ControllerVendedor();
-        //mcl_ControllerVendedor.setlist(lista);
-        //jTable1.setModel(mcl_ControllerVendedor);
+        DaoGeneric vendedordao = new DaoGeneric();
+        List lista = (List) vendedordao.listAll(new MclVendedor());
+        mcl_ControllerVendedor = new Mcl_ControllerVendedor();
+        mcl_ControllerVendedor.setlist(lista);
+        jTable1.setModel(mcl_ControllerVendedor);
                 
     }
     
@@ -101,14 +102,13 @@ public class JDlgMcl_VendedorPesquisar extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
-        // TODO add your handling code here:
-        /*int linSel = jTable1.getSelectedRow();
+        int linSel = jTable1.getSelectedRow();
         if(linSel == -1) {
-            JOptionPane.showMessageDialog(null, "Escolha uma linha primeiro.");
+            Mcl_Util.mcl_mensagem("Escolha uma linha primeiro.");
             return;
-        }*/
-        //Mcl_Vendedor vendedor = (Mcl_Vendedor) mcl_ControllerVendedor.getBean(linSel);
-        jDlgMcl_Vendedor.beanView(/*vendedor*/);
+        }
+        MclVendedor vendedor = (MclVendedor) mcl_ControllerVendedor.getBean(linSel);
+        jDlgMcl_Vendedor.beanView(vendedor);
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 

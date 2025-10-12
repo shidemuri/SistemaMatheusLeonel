@@ -6,6 +6,9 @@ package view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import bean.MclProdutos;
+import dao.DaoGeneric;
+import tools.Mcl_Util;
 
 /**
  *
@@ -14,6 +17,7 @@ import javax.swing.JOptionPane;
 public class JDlgMcl_ProdutosPesquisar extends javax.swing.JDialog {
 
     JDlgMcl_Produtos jDlgMcl_Produtos;
+    Mcl_ControllerProdutos mcl_ControllerProdutos;
     /**
      * Creates new form JDlgUsuariosPesquisar
      */ 
@@ -22,11 +26,11 @@ public class JDlgMcl_ProdutosPesquisar extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Resultados da pesquisa");
-        /*Mcl_ProdutosDao produtosdao = new Mcl_ProdutosDao();
-        List lista = (List) produtosdao.listAll();
+        DaoGeneric produtosdao = new DaoGeneric();
+        List lista = (List) produtosdao.listAll(new MclProdutos());
         mcl_ControllerProdutos = new Mcl_ControllerProdutos();
         mcl_ControllerProdutos.setlist(lista);
-        jTable1.setModel(mcl_ControllerProdutos);*/
+        jTable1.setModel(mcl_ControllerProdutos);
                 
     }
     
@@ -99,13 +103,13 @@ public class JDlgMcl_ProdutosPesquisar extends javax.swing.JDialog {
 
     private void jBtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnOkActionPerformed
         // TODO add your handling code here:
-        /*int linSel = jTable1.getSelectedRow();
+        int linSel = jTable1.getSelectedRow();
         if(linSel == -1) {
-            JOptionPane.showMessageDialog(null, "Escolha uma linha primeiro.");
+            Mcl_Util.mcl_mensagem("Escolha uma linha primeiro.");
             return;
         }
-        Mcl_Produtos produtos = (Mcl_Produtos) mcl_ControllerProdutos.getBean(linSel);*/
-        jDlgMcl_Produtos.beanView();
+        MclProdutos produtos = (MclProdutos) mcl_ControllerProdutos.getBean(linSel);
+        jDlgMcl_Produtos.beanView(produtos);
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
 

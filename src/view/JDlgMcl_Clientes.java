@@ -102,7 +102,7 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         cliente.setMclCelular(jFmtCelular.getText());
         cliente.setMclCep(jFmtCep.getText());
         cliente.setMclCidade(jFmtCep.getText());
-        cliente.setMclIdClientes(Integer.parseInt(jTxtCodigo.getText()));
+        cliente.setMclIdClientes(Mcl_Util.strToInt(jTxtCodigo.getText()));
         cliente.setMclCpf(jFmtCpf.getText());
         cliente.setMclEmail(jTxtEmail.getText());
         cliente.setMclEndereco(jTxtEndereco.getText());
@@ -121,7 +121,7 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         );
         Mcl_Util.mcl_habilitar(false, jBtnIncluir);
         
-        jTxtCodigo.setText(Integer.toString(clientes.getMclIdClientes()));
+        jTxtCodigo.setText(Mcl_Util.intToStr(clientes.getMclIdClientes()));
         jTxtNome.setText(clientes.getMclNome());
         jTxtApelido.setText(clientes.getMclApelido());
         jCboSexo.setSelectedIndex("M".equals(clientes.getMclSexo()) ? 0 : 1);
