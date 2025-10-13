@@ -227,6 +227,11 @@ public class MclClientes  implements java.io.Serializable {
     public void setMclSexo(String mclSexo) {
         this.mclSexo = mclSexo;
     }
+    
+    @Override
+    public String toString() {
+        return this.getMclNome();
+    }
 
 }
 

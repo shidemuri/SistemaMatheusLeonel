@@ -24,8 +24,8 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
      */
     public JDlgMcl_Clientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        setTitle("Cadastro de Clientes");
+        initComponents(); 
+       setTitle("Cadastro de Clientes");
         setLocationRelativeTo(null);   
         habilitar(false);
     }
