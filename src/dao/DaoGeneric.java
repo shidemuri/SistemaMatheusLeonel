@@ -95,8 +95,6 @@ public class DaoGeneric extends DaoAbstract {
         Criteria criteria = session.createCriteria(MclUsuarios.class);
         criteria.add(Restrictions.and(Restrictions.eq("mclNome", usuario.getMclNome()),Restrictions.eq("mclSenha", usuario.getMclSenha())));
         List lista = criteria.list();
-        System.out.println(usuario.getMclNome());
-        System.out.println(usuario.getMclSenha());
         session.getTransaction().commit();
         return !lista.isEmpty();
     }

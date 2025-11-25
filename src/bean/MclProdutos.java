@@ -148,10 +148,18 @@ public class MclProdutos  implements java.io.Serializable {
     public void setMclEmestoque(int mclEmestoque) {
         this.mclEmestoque = mclEmestoque;
     }
-
-
-
-
+    
+    public String toString() {
+        return this.mclModelo;
+    }
+    
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof MclProdutos) {
+            return this.getMclIdProdutos() == ((MclProdutos) object).getMclIdProdutos();
+        }
+        return false;
+    }
 }
 
 

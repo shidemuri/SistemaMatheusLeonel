@@ -115,7 +115,14 @@ public class MclVendedor  implements java.io.Serializable {
     public String toString(){
         return this.getMclNome();
     }
-
+    
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof MclVendedor) {
+            return this.getMclIdVendedor() == ((MclVendedor) object).getMclIdVendedor();
+        }
+        return false;
+    }
 
 }
 

@@ -232,6 +232,13 @@ public class MclClientes  implements java.io.Serializable {
     public String toString() {
         return this.getMclNome();
     }
+    @Override
+    public boolean equals(Object object) {
+        if(object instanceof MclClientes) {
+            return this.getMclIdClientes() == ((MclClientes) object).getMclIdClientes();
+        }
+        return false;
+    }
 
 }
 
