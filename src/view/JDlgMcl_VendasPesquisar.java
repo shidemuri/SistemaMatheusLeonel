@@ -71,6 +71,11 @@ public class JDlgMcl_VendasPesquisar extends javax.swing.JDialog {
             }
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jBtnOk.setText("Ok");
@@ -112,6 +117,12 @@ public class JDlgMcl_VendasPesquisar extends javax.swing.JDialog {
         jDlgMcl_Vendas.beanView(vendas);
         setVisible(false);
     }//GEN-LAST:event_jBtnOkActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(evt.getClickCount() == 2) {
+            jBtnOkActionPerformed(null);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
