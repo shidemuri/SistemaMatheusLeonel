@@ -87,6 +87,19 @@ public class DaoGeneric extends DaoAbstract {
         session.getTransaction().commit();
         return (ArrayList) lista;
     }
+    
+    public boolean autenticar(Object bean) {
+        if(!(bean instanceof MclUsuarios)) throw new Error("bean invalido bobão");
+        MclUsuarios usuario = (MclUsuarios) bean;
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(MclUsuarios.class);
+        criteria.add(Restrictions.and(Restrictions.eq("mclNome", usuario.getMclNome()),Restrictions.eq("mclSenha", usuario.getMclSenha())));
+        List lista = criteria.list();
+        System.out.println(usuario.getMclNome());
+        System.out.println(usuario.getMclSenha());
+        session.getTransaction().commit();
+        return !lista.isEmpty();
+    }
     public static void main(String[] args) {
         System.out.println("Criando novo usuario");
         DaoGeneric teste = new DaoGeneric();
