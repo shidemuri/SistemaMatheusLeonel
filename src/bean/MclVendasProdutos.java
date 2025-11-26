@@ -1,10 +1,15 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,23 +23,22 @@ public class MclVendasProdutos  implements java.io.Serializable {
 
 
      private int mclIdVendasProdutos;
+     private MclProdutos mclProdutos;
+     private MclVendas mclVendas;
      private int mclQuantidade;
      private double mclValorunit;
-     private int mclFkVendas;
-     private int mclFkProdutos;
 
     public MclVendasProdutos() {
     }
 
-    public MclVendasProdutos(int mclIdVendasProdutos, int mclQuantidade, double mclValorunit, int mclFkVendas, int mclFkProdutos) {
-       this.mclIdVendasProdutos = mclIdVendasProdutos;
+    public MclVendasProdutos(MclProdutos mclProdutos, MclVendas mclVendas, int mclQuantidade, double mclValorunit) {
+       this.mclProdutos = mclProdutos;
+       this.mclVendas = mclVendas;
        this.mclQuantidade = mclQuantidade;
        this.mclValorunit = mclValorunit;
-       this.mclFkVendas = mclFkVendas;
-       this.mclFkProdutos = mclFkProdutos;
     }
    
-     @Id 
+     @Id @GeneratedValue(strategy=IDENTITY)
 
     
     @Column(name="mcl_id_vendas_produtos", unique=true, nullable=false)
@@ -44,6 +48,26 @@ public class MclVendasProdutos  implements java.io.Serializable {
     
     public void setMclIdVendasProdutos(int mclIdVendasProdutos) {
         this.mclIdVendasProdutos = mclIdVendasProdutos;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="mcl_fk_produtos", nullable=false)
+    public MclProdutos getMclProdutos() {
+        return this.mclProdutos;
+    }
+    
+    public void setMclProdutos(MclProdutos mclProdutos) {
+        this.mclProdutos = mclProdutos;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="mcl_fk_vendas", nullable=false)
+    public MclVendas getMclVendas() {
+        return this.mclVendas;
+    }
+    
+    public void setMclVendas(MclVendas mclVendas) {
+        this.mclVendas = mclVendas;
     }
 
     
@@ -65,27 +89,10 @@ public class MclVendasProdutos  implements java.io.Serializable {
     public void setMclValorunit(double mclValorunit) {
         this.mclValorunit = mclValorunit;
     }
-
-    
-    @Column(name="mcl_fk_vendas", nullable=false)
-    public int getMclFkVendas() {
-        return this.mclFkVendas;
+    @Override
+    public boolean equals(Object bean) {
+        return bean instanceof MclVendasProdutos && this.getMclIdVendasProdutos()== ((MclVendasProdutos) bean).getMclIdVendasProdutos();    
     }
-    
-    public void setMclFkVendas(int mclFkVendas) {
-        this.mclFkVendas = mclFkVendas;
-    }
-
-    
-    @Column(name="mcl_fk_produtos", nullable=false)
-    public int getMclFkProdutos() {
-        return this.mclFkProdutos;
-    }
-    
-    public void setMclFkProdutos(int mclFkProdutos) {
-        this.mclFkProdutos = mclFkProdutos;
-    }
-
 
 
 

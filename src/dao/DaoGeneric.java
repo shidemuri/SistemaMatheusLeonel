@@ -88,6 +88,15 @@ public class DaoGeneric extends DaoAbstract {
         return (ArrayList) lista;
     }
     
+    public Object listProdutos(MclVendas bean) {
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(MclVendasProdutos.class);
+        criteria.add(Restrictions.eq("mclVendas", bean));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return lista;
+    }
+    
     public boolean autenticar(Object bean) {
         if(!(bean instanceof MclUsuarios)) throw new Error("bean invalido bobão");
         MclUsuarios usuario = (MclUsuarios) bean;

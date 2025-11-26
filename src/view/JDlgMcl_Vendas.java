@@ -8,10 +8,12 @@ import tools.Mcl_Util;
 import bean.MclVendas;
 import bean.MclVendedor;
 import bean.MclClientes;
+import bean.MclVendasProdutos;
 
 import dao.DaoGeneric;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +28,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
 
     private String acao = "incluir";
     DaoGeneric vendasdao = new DaoGeneric();
+    Mcl_ControllerVendasProdutos controllervendasprodutos = new Mcl_ControllerVendasProdutos();
     
     /**
      * Creates new form JDlgUsuarios
@@ -44,6 +47,8 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         for (Object cliente : clientes) {
             jCboCliente.addItem((MclClientes) cliente);
         }
+        controllervendasprodutos.setList(new ArrayList());
+        jTblVendasProdutos.setModel(controllervendasprodutos);
         
     }
     
@@ -57,6 +62,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jBtnConfirmar,
         jBtnCancelar,
         jBtnIncluir,
+        jTblVendasProdutos,
         jBtnIncluirProd,
         jBtnAlterarProd,
         jBtnExcluirProd);
@@ -72,6 +78,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jBtnCancelar,
         jBtnExcluir,
         jBtnAlterar,
+        jTblVendasProdutos,
         jBtnIncluirProd,
         jBtnAlterarProd,
         jBtnExcluirProd);
@@ -84,6 +91,8 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jTxtTotal,
         jFmtDataVenda,
         jCboCliente);
+        
+        controllervendasprodutos.limparLista();
     }
     
     public void beanView(MclVendas vendas){
@@ -96,6 +105,9 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jFmtDataVenda.setText(Mcl_Util.dateToStr(vendas.getMclDataVenda()));
         jCboVendedor.setSelectedItem(vendas.getMclVendedor());
         jCboCliente.setSelectedItem(vendas.getMclClientes());
+        controllervendasprodutos.setList((List) vendasdao.listProdutos(vendas));
+        controllervendasprodutos.fireTableDataChanged();
+                
     }
     
     public MclVendas viewBean() {
@@ -134,7 +146,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jTxtTotal = new javax.swing.JTextField();
         jFmtDataVenda = new javax.swing.JFormattedTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTblVendasProdutos = new javax.swing.JTable();
         jBtnIncluirProd = new javax.swing.JButton();
         jBtnAlterarProd = new javax.swing.JButton();
         jBtnExcluirProd = new javax.swing.JButton();
@@ -216,7 +228,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         }
         jFmtDataVenda.setEnabled(false);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTblVendasProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -227,7 +239,13 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTblVendasProdutos.setEnabled(false);
+        jTblVendasProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblVendasProdutosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTblVendasProdutos);
 
         jBtnIncluirProd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/incluir.png"))); // NOI18N
         jBtnIncluirProd.setEnabled(false);
@@ -379,10 +397,16 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         habilitar(false);
         try{
+            MclVendas venda = viewBean();
             if("incluir".equals(acao)) {
-                vendasdao.insert(viewBean());
+                vendasdao.insert(venda);
+                for (int i = 0; i <  jTblVendasProdutos.getRowCount(); i++) {
+                    MclVendasProdutos vendasprodutos = controllervendasprodutos.getBean(i);
+                    vendasprodutos.setMclVendas(venda);
+                    vendasdao.insert(vendasprodutos);
+                }
             } else if("alterar".equals(acao)) {
-                vendasdao.update(viewBean());
+                vendasdao.update(venda);
             }
             Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
         } catch(Throwable e) {
@@ -404,7 +428,13 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
         if (Mcl_Util.mcl_confirmar("Deseja excluir?")) {
             try{
-                vendasdao.delete(viewBean());
+                MclVendas bean = viewBean();
+                for (int i = 0; i < jTblVendasProdutos.getRowCount(); i++) {
+                    MclVendasProdutos vendasprodutos = controllervendasprodutos.getBean(i);
+                    vendasprodutos.setMclVendas(bean);
+                    vendasdao.delete(vendasprodutos);
+                }
+                vendasdao.delete(bean);
                 Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
             } catch(Throwable e) {
                 Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokoQ8Z4YRm4Vh");
@@ -431,6 +461,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     private void jBtnIncluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIncluirProdActionPerformed
         // TODO add your handling code here:
         JDlgMcl_VendasProdutos jDlgMcl_VendasProdutos = new JDlgMcl_VendasProdutos(null, true);
+        jDlgMcl_VendasProdutos.setController(controllervendasprodutos);
         jDlgMcl_VendasProdutos.setVisible(true);
     }//GEN-LAST:event_jBtnIncluirProdActionPerformed
 
@@ -440,14 +471,20 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarProdActionPerformed
 
     private void jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirProdActionPerformed
-        JDlgMcl_VendasProdutos jDlgMcl_VendasProdutos = new JDlgMcl_VendasProdutos(null, true);
-        jDlgMcl_VendasProdutos.setExcluir(true);
-        jDlgMcl_VendasProdutos.setVisible(true);
+        if(Mcl_Util.mcl_confirmar("Excluir o produto?")) {
+            controllervendasprodutos.removeBean(jTblVendasProdutos.getSelectedRow());
+        }
     }//GEN-LAST:event_jBtnExcluirProdActionPerformed
 
     private void jCboVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboVendedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCboVendedorActionPerformed
+
+    private void jTblVendasProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblVendasProdutosMouseClicked
+        if(evt.getClickCount() == 2) {
+            jBtnAlterarActionPerformed(null);
+        }
+    }//GEN-LAST:event_jTblVendasProdutosMouseClicked
 
     
     
@@ -576,7 +613,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     private javax.swing.JLabel jLblTipo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTblVendasProdutos;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTxtCodigo;
     private javax.swing.JTextField jTxtTotal;

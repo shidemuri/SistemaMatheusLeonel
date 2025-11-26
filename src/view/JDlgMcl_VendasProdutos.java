@@ -6,6 +6,7 @@
 package view;
 
 import bean.MclProdutos;
+import bean.MclVendasProdutos;
 import dao.DaoGeneric;
 import java.util.List;
 import tools.Mcl_Util;
@@ -19,8 +20,8 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
     /**
      * Creates new form JDlgMcl_VendasProdutos
      */
+    Mcl_ControllerVendasProdutos controller;
     DaoGeneric vendasprodutosdao = new DaoGeneric();
-    public boolean excluir = false;
     public JDlgMcl_VendasProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setLocationRelativeTo(null);
@@ -30,10 +31,12 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
             jCboFkProduto.addItem(produto);
         }
     }
-
-    public void setExcluir(boolean asd) {
-        this.excluir = asd;
+    
+    public void setController(Mcl_ControllerVendasProdutos controller) {
+       this.controller = controller;
     }
+    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -62,6 +65,11 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
         jTxtQuantidade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTxtQuantidadeActionPerformed(evt);
+            }
+        });
+        jTxtQuantidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTxtQuantidadeKeyReleased(evt);
             }
         });
 
@@ -158,9 +166,11 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
 
     private void jBtnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConfirmarActionPerformed
         setVisible(false);
-        if(excluir) {
-            Mcl_Util.mcl_confirmar("Deseja excluir?");
-        }
+        MclVendasProdutos vendasprodutos = new MclVendasProdutos();
+        vendasprodutos.setMclProdutos((MclProdutos) jCboFkProduto.getSelectedItem());
+        vendasprodutos.setMclQuantidade(Mcl_Util.strToInt(jTxtQuantidade.getText()));
+        vendasprodutos.setMclValorunit(Mcl_Util.strToDouble(jTxtValorUnit.getText()));
+        controller.addBean(vendasprodutos);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
@@ -176,6 +186,15 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
     private void jTxtQuantidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtQuantidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtQuantidadeActionPerformed
+
+    private void jTxtQuantidadeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtQuantidadeKeyReleased
+        if(jTxtQuantidade.getText().trim().isEmpty()){
+            jTxtTotal.setText("");
+            return;
+        }
+        MclProdutos prod = (MclProdutos) jCboFkProduto.getSelectedItem();
+        jCboFkProdutoActionPerformed(null);
+    }//GEN-LAST:event_jTxtQuantidadeKeyReleased
 
     /**
      * @param args the command line arguments

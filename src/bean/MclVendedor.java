@@ -1,10 +1,12 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -38,7 +40,6 @@ public class MclVendedor  implements java.io.Serializable {
         this.mclSaldo = mclSaldo;
         this.mclVendastotais = mclVendastotais;
     }
-   
      @Id 
 
     
@@ -110,19 +111,19 @@ public class MclVendedor  implements java.io.Serializable {
     public void setMclVendastotais(int mclVendastotais) {
         this.mclVendastotais = mclVendastotais;
     }
-    
-    @Override
-    public String toString(){
+
+     @Override
+    public String toString() {
         return this.getMclNome();
     }
     
     @Override
-    public boolean equals(Object object) {
-        if(object instanceof MclVendedor) {
-            return this.getMclIdVendedor() == ((MclVendedor) object).getMclIdVendedor();
-        }
-        return false;
+    public boolean equals(Object bean) {
+        return bean instanceof MclVendedor && this.getMclIdVendedor() == ((MclVendedor) bean).getMclIdVendedor();    
     }
+
+
+
 
 }
 

@@ -1,5 +1,5 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import javax.persistence.Column;
@@ -34,17 +34,18 @@ public class MclProdutos  implements java.io.Serializable {
     public MclProdutos() {
     }
 
+	
     public MclProdutos(int mclIdProdutos, MclVendedor mclVendedor, String mclFabricante, String mclModelo, int mclAno, String mclMatricula, int mclHorasvoo, String mclDescricao, double mclPreco, int mclEmestoque) {
-       this.mclIdProdutos = mclIdProdutos;
-       this.mclVendedor = mclVendedor;
-       this.mclFabricante = mclFabricante;
-       this.mclModelo = mclModelo;
-       this.mclAno = mclAno;
-       this.mclMatricula = mclMatricula;
-       this.mclHorasvoo = mclHorasvoo;
-       this.mclDescricao = mclDescricao;
-       this.mclPreco = mclPreco;
-       this.mclEmestoque = mclEmestoque;
+        this.mclIdProdutos = mclIdProdutos;
+        this.mclVendedor = mclVendedor;
+        this.mclFabricante = mclFabricante;
+        this.mclModelo = mclModelo;
+        this.mclAno = mclAno;
+        this.mclMatricula = mclMatricula;
+        this.mclHorasvoo = mclHorasvoo;
+        this.mclDescricao = mclDescricao;
+        this.mclPreco = mclPreco;
+        this.mclEmestoque = mclEmestoque;
     }
    
      @Id 
@@ -149,17 +150,17 @@ public class MclProdutos  implements java.io.Serializable {
         this.mclEmestoque = mclEmestoque;
     }
     
+     @Override
     public String toString() {
-        return this.mclModelo;
+        return this.getMclModelo();
     }
-    
+       
     @Override
-    public boolean equals(Object object) {
-        if(object instanceof MclProdutos) {
-            return this.getMclIdProdutos() == ((MclProdutos) object).getMclIdProdutos();
-        }
-        return false;
+    public boolean equals(Object bean) {
+        return bean instanceof MclProdutos && this.getMclIdProdutos() == ((MclProdutos) bean).getMclIdProdutos();    
     }
+
+
 }
 
 

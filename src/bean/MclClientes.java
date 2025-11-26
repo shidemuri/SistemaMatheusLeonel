@@ -1,8 +1,10 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,24 +60,6 @@ public class MclClientes  implements java.io.Serializable {
         this.mclNivel = mclNivel;
         this.mclSexo = mclSexo;
     }
-    public MclClientes(int mclIdClientes, String mclNome, String mclApelido, String mclCpf, String mclRg, Date mclDataNascimento, String mclCelular, String mclEmail, String mclEndereco, String mclBairro, String mclCidade, String mclCep, int mclAtivo, String mclNivel, String mclSexo) {
-       this.mclIdClientes = mclIdClientes;
-       this.mclNome = mclNome;
-       this.mclApelido = mclApelido;
-       this.mclCpf = mclCpf;
-       this.mclRg = mclRg;
-       this.mclDataNascimento = mclDataNascimento;
-       this.mclCelular = mclCelular;
-       this.mclEmail = mclEmail;
-       this.mclEndereco = mclEndereco;
-       this.mclBairro = mclBairro;
-       this.mclCidade = mclCidade;
-       this.mclCep = mclCep;
-       this.mclAtivo = mclAtivo;
-       this.mclNivel = mclNivel;
-       this.mclSexo = mclSexo;
-    }
-   
      @Id 
 
     
@@ -139,7 +123,7 @@ public class MclClientes  implements java.io.Serializable {
     }
 
     
-    @Column(name="mcl_celular", nullable=false, length=16)
+    @Column(name="mcl_celular", nullable=false, length=20)
     public String getMclCelular() {
         return this.mclCelular;
     }
@@ -228,17 +212,16 @@ public class MclClientes  implements java.io.Serializable {
         this.mclSexo = mclSexo;
     }
     
-    @Override
+     @Override
     public String toString() {
         return this.getMclNome();
     }
+    
     @Override
-    public boolean equals(Object object) {
-        if(object instanceof MclClientes) {
-            return this.getMclIdClientes() == ((MclClientes) object).getMclIdClientes();
-        }
-        return false;
+    public boolean equals(Object bean) {
+        return bean instanceof MclClientes && this.getMclIdClientes() == ((MclClientes) bean).getMclIdClientes();    
     }
+
 
 }
 

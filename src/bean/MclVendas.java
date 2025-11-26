@@ -1,5 +1,5 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -32,12 +32,13 @@ public class MclVendas  implements java.io.Serializable {
     public MclVendas() {
     }
 
+	
     public MclVendas(int mclIdVendas, MclClientes mclClientes, MclVendedor mclVendedor, Date mclDataVenda, double mclTotal) {
-       this.mclIdVendas = mclIdVendas;
-       this.mclClientes = mclClientes;
-       this.mclVendedor = mclVendedor;
-       this.mclDataVenda = mclDataVenda;
-       this.mclTotal = mclTotal;
+        this.mclIdVendas = mclIdVendas;
+        this.mclClientes = mclClientes;
+        this.mclVendedor = mclVendedor;
+        this.mclDataVenda = mclDataVenda;
+        this.mclTotal = mclTotal;
     }
    
      @Id 
@@ -91,7 +92,11 @@ public class MclVendas  implements java.io.Serializable {
     public void setMclTotal(double mclTotal) {
         this.mclTotal = mclTotal;
     }
-
+    
+    @Override
+    public boolean equals(Object bean) {
+        return bean instanceof MclVendas && this.getMclIdVendas() == ((MclVendas) bean).getMclIdVendas();    
+    }
 
 
 

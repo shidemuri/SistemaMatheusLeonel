@@ -1,5 +1,5 @@
 package bean;
-// Generated Oct 11, 2025 4:04:59 PM by Hibernate Tools 4.3.1
+// Generated 26/11/2025 14:53:23 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -135,7 +135,15 @@ public class MclUsuarios  implements java.io.Serializable {
         this.mclSenha = mclSenha;
     }
 
+    @Override
+    public String toString() {
+        return this.getMclNome();
+    }
 
+    @Override
+    public boolean equals(Object bean) {
+        return bean instanceof MclUsuarios && this.getMclIdUsuarios() == ((MclUsuarios) bean).getMclIdUsuarios();    
+    }
 
 
 }
