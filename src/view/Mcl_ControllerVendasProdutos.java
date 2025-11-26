@@ -8,7 +8,9 @@ package view;
 import bean.MclVendasProdutos;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
+import tools.Mcl_Util;
 
 /**
  *
@@ -21,8 +23,24 @@ public class Mcl_ControllerVendasProdutos extends AbstractTableModel {
     
     private List<MclVendasProdutos> lista;
     
+    public JTextField total;
+    
+    public void atualizarTotal() {
+        double totalnumero = 0;
+        for (int i = 0; i < lista.size(); i++) {
+            MclVendasProdutos vendaprod = lista.get(i);
+            totalnumero = totalnumero + vendaprod.getMclQuantidade() * vendaprod.getMclValorunit();
+        }
+        total.setText(Mcl_Util.doubleToStr(totalnumero));
+    }
+    
     public void setList(List<MclVendasProdutos> lista) {
         this.lista = lista;
+        atualizarTotal();
+    }
+    
+    public void setTotal(JTextField total) {
+        this.total = total;
     }
     
     public void limparLista() {
@@ -35,10 +53,12 @@ public class Mcl_ControllerVendasProdutos extends AbstractTableModel {
     }
     public void addBean(MclVendasProdutos bean) {
         lista.add(bean);
+        atualizarTotal();
         fireTableDataChanged();
     }
     public void removeBean(int rowIndex) {
         lista.remove(rowIndex);
+        atualizarTotal();
         fireTableDataChanged();
     }
     @Override

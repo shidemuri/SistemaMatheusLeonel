@@ -36,6 +36,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     public JDlgMcl_Vendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        controllervendasprodutos.setTotal(jTxtTotal);
         setTitle("Cadastro de Vendas");
         setLocationRelativeTo(null);   
         habilitar(false);
@@ -55,7 +56,6 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     public void habilitar(){
         Mcl_Util.mcl_habilitar(true, jTxtCodigo,
         jCboVendedor,
-        jTxtTotal,
         jFmtDataVenda,
         jCboCliente,
         
@@ -70,7 +70,6 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     public void habilitar(boolean value){
         Mcl_Util.mcl_habilitar(value,jTxtCodigo,
         jCboVendedor,
-        jTxtTotal,
         jFmtDataVenda,
         jCboCliente,
         
@@ -88,7 +87,6 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         Mcl_Util.mcl_limpar(
         jTxtCodigo,
         jCboVendedor,
-        jTxtTotal,
         jFmtDataVenda,
         jCboCliente);
         
@@ -101,7 +99,6 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
         jBtnExcluir,
         jBtnCancelar);
         jTxtCodigo.setText(Integer.toString(vendas.getMclIdVendas()));
-        jTxtTotal.setText(Double.toString(vendas.getMclTotal()));
         jFmtDataVenda.setText(Mcl_Util.dateToStr(vendas.getMclDataVenda()));
         jCboVendedor.setSelectedItem(vendas.getMclVendedor());
         jCboCliente.setSelectedItem(vendas.getMclClientes());
@@ -471,6 +468,10 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnAlterarProdActionPerformed
 
     private void jBtnExcluirProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirProdActionPerformed
+        if(jTblVendasProdutos.getSelectedRow() == -1) {
+            Mcl_Util.mcl_mensagem("Selecione um produto primeiro.");
+            return;
+        }
         if(Mcl_Util.mcl_confirmar("Excluir o produto?")) {
             controllervendasprodutos.removeBean(jTblVendasProdutos.getSelectedRow());
         }
