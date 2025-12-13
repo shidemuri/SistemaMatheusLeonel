@@ -102,7 +102,7 @@ public class DaoGeneric extends DaoAbstract {
         MclUsuarios usuario = (MclUsuarios) bean;
         session.beginTransaction();
         Criteria criteria = session.createCriteria(MclUsuarios.class);
-        criteria.add(Restrictions.and(Restrictions.eq("mclNome", usuario.getMclNome()),Restrictions.eq("mclSenha", usuario.getMclSenha())));
+        criteria.add(Restrictions.and(Restrictions.eq("mclApelido", usuario.getMclNome()),Restrictions.eq("mclSenha", usuario.getMclSenha())));
         List lista = criteria.list();
         session.getTransaction().commit();
         return !lista.isEmpty();

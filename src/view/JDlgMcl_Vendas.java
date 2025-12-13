@@ -404,6 +404,16 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
                 }
             } else if("alterar".equals(acao)) {
                 vendasdao.update(venda);
+                List vendasprodutosexcluir = (List) vendasdao.listProdutos(venda);
+                for (int i = 0; i < vendasprodutosexcluir.size(); i++) {
+                    MclVendasProdutos vendasprod = (MclVendasProdutos) vendasprodutosexcluir.get(i);
+                    vendasdao.delete(vendasprod);
+                }
+                for (int i = 0; i < jTblVendasProdutos.getRowCount(); i++) {
+                    MclVendasProdutos vendasprodutos = controllervendasprodutos.getBean(i);
+                    vendasprodutos.setMclVendas(venda);
+                    vendasdao.insert(vendasprodutos);
+                }
             }
             Mcl_Util.tocarSom("https://host.killerfish.co/api/download/defokofoFtGekd9R");
         } catch(Throwable e) {
@@ -418,7 +428,7 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     private void jBtnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarActionPerformed
         acao = "alterar";
         habilitar();
-        Mcl_Util.mcl_habilitar(false, jTxtCodigo, jBtnIncluir);
+        Mcl_Util.mcl_habilitar(false, jBtnAlterar, jBtnExcluir,  jTxtCodigo, jBtnIncluir);
         jFmtDataVenda.requestFocusInWindow();
     }//GEN-LAST:event_jBtnAlterarActionPerformed
 
