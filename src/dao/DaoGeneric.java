@@ -15,6 +15,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import tools.Mcl_Util;
 
 /**
  *
@@ -69,6 +70,8 @@ public class DaoGeneric extends DaoAbstract {
     private String pegarChaveConsulta1(Class classe) {
         if(classe == MclClientes.class) {
             return "mclNome";
+        } else if(classe == MclProdutos.class) {
+            return "mclModelo";
         }
         
         else {
@@ -78,6 +81,8 @@ public class DaoGeneric extends DaoAbstract {
     private String pegarChaveConsulta2(Class classe) {
         if(classe == MclClientes.class) {
             return "mclCidade";
+        } else if(classe == MclProdutos.class) {
+            return "mclPreco";
         }
         
         else {
@@ -115,6 +120,26 @@ public class DaoGeneric extends DaoAbstract {
         Criteria criteria = session.createCriteria(classe);
         if(!eirinyagokoro.trim().isEmpty()) criteria.add(Restrictions.like(pegarChaveConsulta1(classe), eirinyagokoro, MatchMode.ANYWHERE));
         if(!kaguyahouraisan.trim().isEmpty()) criteria.add(Restrictions.like(pegarChaveConsulta2(classe), kaguyahouraisan, MatchMode.ANYWHERE));
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return (ArrayList) lista;
+    }
+    
+    public ArrayList listAllGe(Object bean, String eirinyagokoro, String kaguyahouraisan) {
+        session.beginTransaction();
+        Class classe = bean.getClass();
+        pegarChavePrimaria(classe);
+        Criteria criteria = session.createCriteria(classe);
+        if(!eirinyagokoro.trim().isEmpty()) criteria.add(Restrictions.like(pegarChaveConsulta1(classe), eirinyagokoro, MatchMode.ANYWHERE));
+        if(!kaguyahouraisan.trim().isEmpty()) {
+            try {
+                criteria.add(Restrictions.ge(pegarChaveConsulta2(classe), Mcl_Util.strToDouble(kaguyahouraisan)));
+            } catch(IllegalArgumentException e) {
+                Mcl_Util.mcl_mensagem("Falha ao converter critério de pesquisa para decimal: " + kaguyahouraisan);
+                session.getTransaction().rollback();
+                return new ArrayList();
+            }
+        }
         List lista = criteria.list();
         session.getTransaction().commit();
         return (ArrayList) lista;
