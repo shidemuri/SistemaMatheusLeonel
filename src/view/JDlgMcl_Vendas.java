@@ -473,7 +473,12 @@ public class JDlgMcl_Vendas extends javax.swing.JDialog {
     }//GEN-LAST:event_jBtnIncluirProdActionPerformed
 
     private void jBtnAlterarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAlterarProdActionPerformed
+        if(jTblVendasProdutos.getSelectedRow() == -1) {
+            Mcl_Util.mcl_mensagem("Selecione um produto primeiro.");
+            return;
+        }
         JDlgMcl_VendasProdutos jDlgMcl_VendasProdutos = new JDlgMcl_VendasProdutos(null, true);
+        jDlgMcl_VendasProdutos.setController(controllervendasprodutos, jTblVendasProdutos.getSelectedRow());
         jDlgMcl_VendasProdutos.setVisible(true);
     }//GEN-LAST:event_jBtnAlterarProdActionPerformed
 

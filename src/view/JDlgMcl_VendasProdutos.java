@@ -16,7 +16,11 @@ import tools.Mcl_Util;
  * @author u42165518822
  */
 public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
-
+    
+    // agora são 16:24 do dia 13/12/2025, prazo final da entrega da prova é meia noite e papaizinho tinha chamado pra limpar a cozinha desde as 1hr da tarde
+    private boolean incluir = true;
+    private int produtoidx = -1;
+    
     /**
      * Creates new form JDlgMcl_VendasProdutos
      */
@@ -30,6 +34,16 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
         for (MclProdutos produto : produtos) {
             jCboFkProduto.addItem(produto);
         }
+    }
+    
+    public void setController(Mcl_ControllerVendasProdutos controller, int produtoidx) {
+        MclVendasProdutos vendasprodutos = controller.getBean(produtoidx);
+        this.controller = controller;
+        this.produtoidx = produtoidx;
+        incluir = false;
+        jCboFkProduto.setSelectedItem(vendasprodutos.getMclProdutos());
+        jTxtQuantidade.setText(Mcl_Util.intToStr(vendasprodutos.getMclQuantidade()));
+        jCboFkProdutoActionPerformed(null);
     }
     
     public void setController(Mcl_ControllerVendasProdutos controller) {
@@ -170,6 +184,9 @@ public class JDlgMcl_VendasProdutos extends javax.swing.JDialog {
         vendasprodutos.setMclProdutos((MclProdutos) jCboFkProduto.getSelectedItem());
         vendasprodutos.setMclQuantidade(Mcl_Util.strToInt(jTxtQuantidade.getText()));
         vendasprodutos.setMclValorunit(Mcl_Util.strToDouble(jTxtValorUnit.getText()));
+        if(incluir == false) {
+            controller.removeBean(produtoidx);
+        }
         controller.addBean(vendasprodutos);
     }//GEN-LAST:event_jBtnConfirmarActionPerformed
 
