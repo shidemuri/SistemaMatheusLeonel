@@ -101,7 +101,7 @@ public class JDlgMcl_Clientes extends javax.swing.JDialog {
         cliente.setMclBairro(jTxtBairro.getText());
         cliente.setMclCelular(jFmtCelular.getText());
         cliente.setMclCep(jFmtCep.getText());
-        cliente.setMclCidade(jFmtCep.getText());
+        cliente.setMclCidade(jTxtCidade.getText());
         cliente.setMclIdClientes(Mcl_Util.strToInt(jTxtCodigo.getText()));
         cliente.setMclDataNascimento(Mcl_Util.strToDate(jFmtDataNascimento.getText()));
         cliente.setMclCpf(jFmtCpf.getText());

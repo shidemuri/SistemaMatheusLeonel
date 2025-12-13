@@ -13,6 +13,7 @@ import bean.MclVendedor;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -65,6 +66,25 @@ public class DaoGeneric extends DaoAbstract {
         }
     }
     
+    private String pegarChaveConsulta1(Class classe) {
+        if(classe == MclClientes.class) {
+            return "mclNome";
+        }
+        
+        else {
+            throw new Error("bean invalido");
+        }
+    }
+    private String pegarChaveConsulta2(Class classe) {
+        if(classe == MclClientes.class) {
+            return "mclCidade";
+        }
+        
+        else {
+            throw new Error("bean invalido");
+        }
+    }
+    
     @Override
     public Object list(Object bean, int codigo) {
         session.beginTransaction();
@@ -83,6 +103,18 @@ public class DaoGeneric extends DaoAbstract {
         Class classe = bean.getClass();
         pegarChavePrimaria(classe); //valida o bean passado
         Criteria criteria = session.createCriteria(classe);
+        List lista = criteria.list();
+        session.getTransaction().commit();
+        return (ArrayList) lista;
+    }
+    
+    public ArrayList listAllLike(Object bean, String eirinyagokoro, String kaguyahouraisan) {
+        session.beginTransaction();
+        Class classe = bean.getClass();
+        pegarChavePrimaria(classe);
+        Criteria criteria = session.createCriteria(classe);
+        if(!eirinyagokoro.trim().isEmpty()) criteria.add(Restrictions.like(pegarChaveConsulta1(classe), eirinyagokoro, MatchMode.ANYWHERE));
+        if(!kaguyahouraisan.trim().isEmpty()) criteria.add(Restrictions.like(pegarChaveConsulta2(classe), kaguyahouraisan, MatchMode.ANYWHERE));
         List lista = criteria.list();
         session.getTransaction().commit();
         return (ArrayList) lista;
