@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package view;
-import bean.MclClientes;
+import bean.MclVendedor;
 import dao.DaoGeneric;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,17 +14,17 @@ import java.util.List;
  * @author padero
  */
 
-// https://www.youtube.com/watch?v=V_bQNPG2OyE
+// CONTRAPONTO 3: https://www.youtube.com/watch?v=tp1_V6LrWOs
 
-public class JDlgMcl_ConsultaClientes extends javax.swing.JDialog {
+public class JDlgMcl_ConsultaVendas extends javax.swing.JDialog {
     DaoGeneric consultadao = new DaoGeneric();
     /**
-     * Creates new form JDlgMcl_ConsultaClientes
+     * Creates new form JDlgMcl_ConsultaVendedor
      */
-    Mcl_ControllerConsultaClientes controller = new Mcl_ControllerConsultaClientes();
-    public JDlgMcl_ConsultaClientes(java.awt.Frame parent, boolean modal) {
+    Mcl_ControllerConsultaVendedor controller = new Mcl_ControllerConsultaVendedor();
+    public JDlgMcl_ConsultaVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        setTitle("Consulta de clientes");
+        setTitle("Consulta de vendedores");
         initComponents();
         controller.setlist(new ArrayList());
         jTblConsultado.setModel(controller);
@@ -73,7 +73,7 @@ public class JDlgMcl_ConsultaClientes extends javax.swing.JDialog {
 
         jLabel1.setText("Nome");
 
-        jLabel2.setText("Cidade");
+        jLabel2.setText("Saldo maior que");
 
         jBtnConsultar.setText("Consultar");
         jBtnConsultar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,7 +102,7 @@ public class JDlgMcl_ConsultaClientes extends javax.swing.JDialog {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTxtCriterio, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                                 .addComponent(jBtnConsultar))
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
@@ -128,11 +128,11 @@ public class JDlgMcl_ConsultaClientes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBtnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConsultarActionPerformed
-        MclClientes flandrescarlet = new MclClientes();
+        MclVendedor flandrescarlet = new MclVendedor();
         flandrescarlet.setMclNome("Consultando, aguarde...");
         controller.setlist(new ArrayList());
         controller.addBean(flandrescarlet);
-        List remiliascarlet = (List) consultadao.listAllLike(new MclClientes(), jTxtNome.getText(), jTxtCriterio.getText());
+        List remiliascarlet = (List) consultadao.listAllGe(new MclVendedor(), jTxtNome.getText(), jTxtCriterio.getText());
         controller.setlist(remiliascarlet);
     }//GEN-LAST:event_jBtnConsultarActionPerformed
 
@@ -157,20 +157,35 @@ public class JDlgMcl_ConsultaClientes extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JDlgMcl_ConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDlgMcl_ConsultaClientes dialog = new JDlgMcl_ConsultaClientes(new javax.swing.JFrame(), true);
+                JDlgMcl_ConsultaVendas dialog = new JDlgMcl_ConsultaVendas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

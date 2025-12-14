@@ -14,7 +14,7 @@ import java.util.List;
  * @author padero
  */
 
-// CONTRAPONTO: https://moriyashrine.org/resources/categories/games.5/
+// CONTRAPONTO: https://www.youtube.com/watch?v=shmAGOTo824
 
 public class JDlgMcl_ConsultaProdutos extends javax.swing.JDialog {
     DaoGeneric consultadao = new DaoGeneric();
@@ -24,6 +24,7 @@ public class JDlgMcl_ConsultaProdutos extends javax.swing.JDialog {
     Mcl_ControllerConsultaProdutos controller = new Mcl_ControllerConsultaProdutos();
     public JDlgMcl_ConsultaProdutos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setTitle("Consulta de produtos");
         initComponents();
         controller.setlist(new ArrayList());
         jTblConsultado.setModel(controller);

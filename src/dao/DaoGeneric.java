@@ -72,6 +72,8 @@ public class DaoGeneric extends DaoAbstract {
             return "mclNome";
         } else if(classe == MclProdutos.class) {
             return "mclModelo";
+        } else if(classe == MclVendedor.class) {
+            return "mclNome";
         }
         
         else {
@@ -83,6 +85,8 @@ public class DaoGeneric extends DaoAbstract {
             return "mclCidade";
         } else if(classe == MclProdutos.class) {
             return "mclPreco";
+        } else if(classe == MclVendedor.class) {
+            return "mclSaldo";
         }
         
         else {
