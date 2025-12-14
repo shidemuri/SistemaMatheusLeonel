@@ -24,7 +24,7 @@ public class JDlgMcl_ConsultaVendas extends javax.swing.JDialog {
     Mcl_ControllerConsultaVendedor controller = new Mcl_ControllerConsultaVendedor();
     public JDlgMcl_ConsultaVendas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        setTitle("Consulta de vendedores");
+        setTitle("Consulta de vendas");
         initComponents();
         controller.setlist(new ArrayList());
         jTblConsultado.setModel(controller);
